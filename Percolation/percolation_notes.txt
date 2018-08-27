@@ -1,0 +1,35 @@
+Methods from UnionFind:
+
+- union()
+- find()
+- connected()
+- count()
+
+Required data structures:
+- Grid representing the sites, but no 0,0 so need it to be n+1 by n+1
+- WQUUF array to represent these sites, plus some way to represent the
+  top and bottom nodes for optimizing .percolates()
+
+Logical flow:
+
+- open sites at random, setting each site to open in the grid
+- this means that the grid should be initialized with each element set to 
+"false" and then changed to "true" whenever the site is opened
+- when a site is opened, look at any adjacent squares and see if they're 
+also open, in which case you call union() on your square and those other
+adjacent squares 
+  - also be sure to increment the instance variable "openSites" by 1
+- test if the system is connected using percolates(), which will simply 
+call connected() on the top and bottom squares
+- repeat until the system percolates 
+
+TODO:
+- need a system for initializing WQUUF with those shortcut top and bottom 
+squares
+- WQUUF constructor takes in only n as an argument, but that does not create
+the shortcut squares that are required. Need a way to add those to the array
+and change the xyTo1D() method to properly ignore those and return the 
+correct WQUUF index for a given grid position
+
+- Find out how to get the adjacent sites to the ones in the grid
+ - This is important for open()
