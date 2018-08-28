@@ -1,0 +1,26 @@
+- Use StdIn instead of java.util.Scanner to capture input from the user
+- Implement the API exactly as specified: no other public methods allowed
+- Use StdRandom.uniform(n) to generate random integers between 0 and n-1
+- To shuffle use StdRandom.shuffle(), which implements Knuth shuffle
+    - This might not be necessary depending on the implementation, suggesting maybe
+  there's a way to do it without needing to shuffle the array
+- Avoid using casts, as they are usually a sign of bad code
+    - Max 2 casts allowed for the RandomizedQueue with resizing array
+ implementation
+
+- Remember to remove elements that have no reference to them to avoid
+"loitering"
+- Create nested classes for Nodes in the ArrayList implementation
+    - Nested classes can have a constructor
+
+- Start off by double-checking the performance requirements of the API
+operations and ensuring that they can be met with the implementation. Write a
+pseudocode skeleton to plan out how to implement on a general level each file
+
+- Check out their own implementations of ResizingArrayStack and LinkedStack to
+get an idea of how to implement iterators and see what they mean by foreach in
+this particular case
+
+- Learn how to create Java unit tests and create a class named TestDeque and one
+ named TestRandomizedQueue to test the different methods in the API and be sure
+ that they perform as they should
