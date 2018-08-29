@@ -24,3 +24,8 @@ this particular case
 - Learn how to create Java unit tests and create a class named TestDeque and one
  named TestRandomizedQueue to test the different methods in the API and be sure
  that they perform as they should
+
+- LinkedStack linked list implementation uses a private helper method for
+validation of invariants called check()
+    - At the end of methods that alter the stack, the code asserts check() to
+    ensure that the invariants are not altered
