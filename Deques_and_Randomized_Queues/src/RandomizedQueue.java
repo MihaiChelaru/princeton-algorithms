@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.StdRandom;
+
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -10,14 +12,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * Construct an empty randomized queue
      */
     public RandomizedQueue() {
-
+        items = (Item[]) new Object[2];
+        size = 0;
     }
 
     /**
      * Returns true if randomized queue is empty
      */
     public boolean isEmpty() {
-        return true;
+        return size == 0;
     }
 
     /**
@@ -29,11 +32,30 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     /**
+     * Resize the array representing the RandomizedQueue to either accomodate
+     * more objects or save space when there are less objects
+     */
+    private void resize(int capacity) {
+        assert capacity >= size;
+
+        Item[] temp = (Item[]) new Object[capacity];
+        for (int i = 0; i < size; i++) {
+            temp[i] = items[i];
+        }
+        items = temp;
+    }
+
+    /**
      * Adds the item to the queue (does not matter where)
      */
     public void enqueue(Item item) {
         if (item == null) {
             throw new IllegalArgumentException("Cannot add null item to queue");
+        }
+        items[size] = item;
+        size++;
+        if (size == items.length) {
+            resize(size * 2);
         }
     }
 
@@ -44,7 +66,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size() == 0) {
             throw new NoSuchElementException("Cannot dequeue from empty queue");
         }
-        return null;
+        int rand = StdRandom.uniform(0, size);
+        Item item = items[rand];
+        items[rand] = items[size - 1];
+        items[size - 1] = null;
+        size--;
+        if (size <= items.length / 4) {
+            resize(items.length / 2);
+        }
+        return item;
     }
 
     /**
@@ -54,7 +84,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size() == 0) {
             throw new NoSuchElementException("Cannot sample from empty queue");
         }
-        return null;
+        int rand = StdRandom.uniform(0, size);
+        return items[rand];
     }
 
     /**
@@ -62,6 +93,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * uniformly random order
      */
     public Iterator<Item> iterator() {
+        StdRandom.shuffle(items, 0, size);
         return new ListIterator();
     }
 
@@ -69,15 +101,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * Implements next() and hasNext() methods of standard iterators
      */
     private class ListIterator implements Iterator<Item> {
+        int currentIndex = 0;
 
         @Override
         public boolean hasNext() {
-            return false;
+            return currentIndex < size;
         }
 
         @Override
         public Item next() {
-            return null;
+            return items[currentIndex++];
         }
 
         @Override
