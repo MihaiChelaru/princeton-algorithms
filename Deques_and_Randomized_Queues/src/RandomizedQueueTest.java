@@ -1,5 +1,5 @@
-import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public class RandomizedQueueTest {
     @Test()
@@ -37,4 +37,17 @@ public class RandomizedQueueTest {
         queue.sample();
         Assert.assertEquals(queue.size(), 2);
     }
+
+    @Test()
+    public void iteratorTest() {
+        RandomizedQueue<Integer> queue = new RandomizedQueue<>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        int sum = 0;
+        for (Integer element : queue) {
+            sum += element;
+        }
+        Assert.assertEquals(sum, 3);
+    }
+
 }

@@ -1,5 +1,4 @@
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
@@ -33,7 +32,7 @@ public class Deque<Item> implements Iterable<Item> {
      * @return true if size == 0, else false
      */
     public boolean isEmpty() {
-        return first == null;
+        return size == 0;
     }
 
     /**
@@ -104,6 +103,9 @@ public class Deque<Item> implements Iterable<Item> {
         if (first != null) {
             first.previous = null;
         }
+        if (oldFirst == last) {
+            last = null;
+        }
         oldFirst = null;
         size--;
         return firstValue;
@@ -123,6 +125,9 @@ public class Deque<Item> implements Iterable<Item> {
         last = oldLast.previous;
         if (last != null) {
             last.next = null;
+        }
+        if (oldLast == first) {
+            first = null;
         }
         oldLast = null;
         size--;
@@ -176,8 +181,6 @@ public class Deque<Item> implements Iterable<Item> {
 
     /**
      * Optional test client
-     *
-     * @param args
      */
     public static void main(String[] args) {
         Deque<Integer> deque = new Deque<>();

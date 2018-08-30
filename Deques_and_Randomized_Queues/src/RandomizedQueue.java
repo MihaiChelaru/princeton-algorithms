@@ -1,7 +1,6 @@
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
@@ -93,7 +92,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * uniformly random order
      */
     public Iterator<Item> iterator() {
-        StdRandom.shuffle(items, 0, size);
         return new ListIterator();
     }
 
@@ -102,6 +100,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      */
     private class ListIterator implements Iterator<Item> {
         int currentIndex = 0;
+        Item[] iterArray;
+
+        private ListIterator() {
+            this.iterArray = (Item[]) new Object[size];
+            System.arraycopy(items, 0, iterArray, 0, size);
+            StdRandom.shuffle(iterArray, 0, size);
+        }
 
         @Override
         public boolean hasNext() {
@@ -110,7 +115,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
-            return items[currentIndex++];
+            if (!hasNext()) throw new NoSuchElementException();
+            return iterArray[currentIndex++];
         }
 
         @Override
